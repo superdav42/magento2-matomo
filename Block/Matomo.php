@@ -49,6 +49,8 @@ class Matomo extends \Magento\Framework\View\Element\Template
      */
     protected $_dataHelper = null;
 
+    protected \Magento\Csp\Helper\CspNonceProvider $_cspNonceProvider;
+
     /**
      * Constructor
      *
@@ -56,6 +58,7 @@ class Matomo extends \Magento\Framework\View\Element\Template
      * @param \Magento\Framework\Json\EncoderInterface $jsonEncoder
      * @param \Chessio\Matomo\Model\Tracker $tracker
      * @param \Chessio\Matomo\Helper\Data $dataHelper
+     * @param \Magento\Csp\Helper\CspNonceProvider $cspNonceProvider
      * @param array $data
      */
     public function __construct(
@@ -63,11 +66,13 @@ class Matomo extends \Magento\Framework\View\Element\Template
         \Magento\Framework\Json\EncoderInterface $jsonEncoder,
         \Chessio\Matomo\Model\Tracker $tracker,
         \Chessio\Matomo\Helper\Data $dataHelper,
+        \Magento\Csp\Helper\CspNonceProvider $cspNonceProvider,
         array $data = []
     ) {
         $this->_jsonEncoder = $jsonEncoder;
         $this->_tracker = $tracker;
         $this->_dataHelper = $dataHelper;
+        $this->_cspNonceProvider = $cspNonceProvider;
         parent::__construct($context, $data);
     }
 
@@ -116,7 +121,8 @@ class Matomo extends \Magento\Framework\View\Element\Template
             'scriptUrl'  => $this->getScriptUrl(),
             'trackerUrl' => $this->getTrackerUrl(),
             'siteId'     => $this->getSiteId(),
-            'actions'    => $this->getTracker()->toArray()
+            'actions'    => $this->getTracker()->toArray(),
+            'nonce'      => $this->_cspNonceProvider->generateNonce(),
         ];
     }
 

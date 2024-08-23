@@ -19,8 +19,10 @@
  * along with Chessio_Matomo.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/** @var \Chessio\Matomo\Block\Matomo $block */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
 ?>
-<?php /** @var \Chessio\Matomo\Block\Matomo $block */ ?>
+<?php  ?>
 <script type="text/x-magento-init">
 <?= $block->jsonEncode([
     '*' => [
@@ -29,26 +31,30 @@
 ]); ?>
 </script>
 <?php
+// Render tage without echo so it's added to the dynamic CSP.
+$secureRenderer->renderTag('script', ['src' => $block->getScriptUrl()]);
+
 // The following script can be omitted in which case the
 // `Chessio_Matomo/js/tracker' component will inject the tracker script instead.
 // However that might cause the tracker script to miss the `DOMContentLoaded'
 // event which breaks the link tracking feature.
-?>
-<script type="text/javascript">
+$scriptString = <<<script
 (function (w, d) {
     w._paq = w._paq || [];
-    w._paq.push(['setTrackerUrl', '<?= $block->escapeJsQuote($block->getTrackerUrl()); ?>']);
-    w._paq.push(['setSiteId', <?= (int) $block->getSiteId(); ?>]);
+    w._paq.push(['setTrackerUrl', '{$block->escapeJsQuote($block->getTrackerUrl())}']);
+    w._paq.push(['setSiteId', {$block->getSiteId()}]);
     var g = d.createElement('script'),
         s = d.getElementsByTagName('script')[0];
     g.type = 'text/javascript';
     g.async = true;
     g.defer = true;
-    g.src = '<?= $block->escapeJsQuote($block->getScriptUrl()); ?>';
+    g.src = '{$block->escapeJsQuote($block->getScriptUrl())}';
     s.parentNode.insertBefore(g, s);
 })(window, document);
-</script>
-<?php
+script;
+
+echo $secureRenderer->renderTag('script', [], $scriptString, false);
+
 // The following script is a workaround that prevents the checkout loader
 // overlay from spinning indefinitely in cases where a browser plugin such as
 // AdBlock stops the tracker JS component from loading. The loader indicator
@@ -56,8 +62,8 @@
 // export a mocked version of the component if we get an `errback' from require.
 // @see vendor/magento/module-checkout/view/frontend/web/js/checkout-loader.js
 // @see lib/web/mage/requirejs/resolver.js
-?>
-<script type="text/javascript">
+
+$scriptString = <<<script
 (function (require, undefined) {
     'use strict';
     var moduleName = 'Chessio_Matomo/js/tracker';
@@ -83,7 +89,9 @@
         }
     });
 })(require);
-</script>
+script;
+echo $secureRenderer->renderTag('script', [], $scriptString, false);
+?>
 <noscript>
     <p>
         <img src="<?= $block->getTrackingPixelUrl(); ?>"

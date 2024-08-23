@@ -94,12 +94,13 @@ define([
      *
      * @param {String} scriptUrl
      */
-    function injectScript(scriptUrl) {
+    function injectScript(scriptUrl, nonce) {
         $('<script>')
             .attr('type', 'text/javascript')
             .attr('async', true)
             .attr('defer', true)
             .attr('src', scriptUrl)
+            .attr('nonce', nonce)
             .appendTo('head');
     }
 
@@ -312,7 +313,7 @@ define([
                     ['setSiteId', defaultSiteId],
                     ['setTrackerUrl', defaultTrackerUrl]
                 ]);
-                injectScript(options.scriptUrl);
+                injectScript(options.scriptUrl, options.nonce);
             }
         } else {
             // If we already have the Matomo object we can resolve any pending
