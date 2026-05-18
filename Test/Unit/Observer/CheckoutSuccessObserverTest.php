@@ -91,6 +91,7 @@ class CheckoutSuccessObserverTest extends \PHPUnit\Framework\TestCase
      *
      * @return void
      */
+    #[\Override]
     public function setUp(): void
     {
         $objectMgr = new ObjectManager($this);

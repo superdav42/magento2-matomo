@@ -53,6 +53,7 @@ class BeforeTrackPageViewObserver implements ObserverInterface
      * @param \Magento\Framework\Event\Observer $observer
      * @return \Chessio\Matomo\Observer\BeforeTrackPageViewObserver
      */
+    #[\Override]
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $tracker = $observer->getEvent()->getTracker();

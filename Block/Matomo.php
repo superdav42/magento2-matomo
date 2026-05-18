@@ -49,8 +49,6 @@ class Matomo extends \Magento\Framework\View\Element\Template
      */
     protected $_dataHelper = null;
 
-    protected \Magento\Csp\Helper\CspNonceProvider $_cspNonceProvider;
-
     /**
      * Constructor
      *
@@ -58,7 +56,7 @@ class Matomo extends \Magento\Framework\View\Element\Template
      * @param \Magento\Framework\Json\EncoderInterface $jsonEncoder
      * @param \Chessio\Matomo\Model\Tracker $tracker
      * @param \Chessio\Matomo\Helper\Data $dataHelper
-     * @param \Magento\Csp\Helper\CspNonceProvider $cspNonceProvider
+     * @param \Magento\Csp\Helper\CspNonceProvider $_cspNonceProvider
      * @param array $data
      */
     public function __construct(
@@ -66,13 +64,12 @@ class Matomo extends \Magento\Framework\View\Element\Template
         \Magento\Framework\Json\EncoderInterface $jsonEncoder,
         \Chessio\Matomo\Model\Tracker $tracker,
         \Chessio\Matomo\Helper\Data $dataHelper,
-        \Magento\Csp\Helper\CspNonceProvider $cspNonceProvider,
+        protected \Magento\Csp\Helper\CspNonceProvider $_cspNonceProvider,
         array $data = []
     ) {
         $this->_jsonEncoder = $jsonEncoder;
         $this->_tracker = $tracker;
         $this->_dataHelper = $dataHelper;
-        $this->_cspNonceProvider = $cspNonceProvider;
         parent::__construct($context, $data);
     }
 
@@ -174,10 +171,9 @@ class Matomo extends \Magento\Framework\View\Element\Template
     /**
      * Encode data to a JSON string
      *
-     * @param mixed $data
      * @return string
      */
-    public function jsonEncode($data)
+    public function jsonEncode(mixed $data)
     {
         return $this->_jsonEncoder->encode($data);
     }
@@ -187,6 +183,7 @@ class Matomo extends \Magento\Framework\View\Element\Template
      *
      * @return string
      */
+    #[\Override]
     protected function _toHtml()
     {
         if ($this->_dataHelper->isTrackingEnabled()) {

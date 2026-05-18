@@ -95,6 +95,7 @@ class CheckoutSuccessObserver implements ObserverInterface
      * @param \Magento\Framework\Event\Observer $observer
      * @return \Chessio\Matomo\Observer\CheckoutSuccessObserver
      */
+    #[\Override]
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $orderIds = $observer->getEvent()->getOrderIds();

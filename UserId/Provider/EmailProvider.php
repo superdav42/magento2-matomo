@@ -50,11 +50,12 @@ class EmailProvider implements ProviderInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getUserId($customerId)
     {
         try {
             return $this->_customerRepository->getById($customerId)->getEmail();
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return false;
         }
     }
@@ -62,6 +63,7 @@ class EmailProvider implements ProviderInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getTitle()
     {
         return __('Customer E-mail');

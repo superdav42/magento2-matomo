@@ -49,6 +49,7 @@ class TrackerTest extends \PHPUnit\Framework\TestCase
      *
      * @return void
      */
+    #[\Override]
     public function setUp(): void
     {
         $objectManager = new ObjectManager($this);
@@ -69,12 +70,10 @@ class TrackerTest extends \PHPUnit\Framework\TestCase
         $arguments['actionFactory']
             ->expects($this->any())
             ->method('create')
-            ->willReturnCallback(function ($data) {
-                return new \Chessio\Matomo\Model\Tracker\Action(
-                    $data['name'],
-                    $data['args']
-                );
-            });
+            ->willReturnCallback(fn($data) => new \Chessio\Matomo\Model\Tracker\Action(
+                $data['name'],
+                $data['args']
+            ));
         $this->_tracker = $objectManager->getObject($class, $arguments);
     }
 
@@ -118,7 +117,7 @@ class TrackerTest extends \PHPUnit\Framework\TestCase
         // Build expected tracker result from $items and $total
         $expectedResult = [];
         foreach ($items as $item) {
-            list($sku, $name, $price, $qty) = $item;
+            [$sku, $name, $price, $qty] = $item;
             $expectedResult[] = [
                 'addEcommerceItem',
                 $sku,
@@ -212,8 +211,7 @@ class TrackerTest extends \PHPUnit\Framework\TestCase
     {
         $orders = [];
         foreach ($ordersData as $orderData) {
-            list($incrementId, $grandTotal, $subTotal, $tax, $shipping,
-                 $discount, $itemsData) = $orderData;
+            [$incrementId, $grandTotal, $subTotal, $tax, $shipping, $discount, $itemsData] = $orderData;
              $orders[] = $this->_getOrderMock(
                  $incrementId,
                  $grandTotal,
@@ -243,7 +241,7 @@ class TrackerTest extends \PHPUnit\Framework\TestCase
     {
         $quoteItems = [];
         foreach ($items as $itemData) {
-            list($sku, $name, $price, $qty) = $itemData;
+            [$sku, $name, $price, $qty] = $itemData;
             $item = $this->createPartialMock(
                 \Magento\Quote\Model\Quote\Item::class,
                 ['getData']
@@ -300,7 +298,7 @@ class TrackerTest extends \PHPUnit\Framework\TestCase
     ) {
         $items = [];
         foreach ($itemsData as $itemData) {
-            list($sku, $name, $price, $qty, $parentId) = $itemData;
+            [$sku, $name, $price, $qty, $parentId] = $itemData;
             $items[] = $this->createConfiguredMock(
                 \Magento\Sales\Api\Data\OrderItemInterface::class,
                 [

@@ -86,6 +86,7 @@ class SearchResultObserver implements ObserverInterface
      * @return \Chessio\Matomo\Observer\SearchResultObserver
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    #[\Override]
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         if (!$this->_dataHelper->isTrackingEnabled()) {

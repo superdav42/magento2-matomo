@@ -31,6 +31,7 @@ class EntityIdProvider implements ProviderInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getUserId($customerId)
     {
         return (string) $customerId;
@@ -39,6 +40,7 @@ class EntityIdProvider implements ProviderInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getTitle()
     {
         return __('Customer Entity ID');

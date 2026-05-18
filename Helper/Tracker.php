@@ -108,7 +108,7 @@ class Tracker extends \Magento\Framework\App\Helper\AbstractHelper
 
         // Push `addEcommerceItem'
         foreach ($matomoItems as $matomoItem) {
-            list($sku, $name, $rowTotal, $qty) = $matomoItem;
+            [$sku, $name, $rowTotal, $qty] = $matomoItem;
 
             $tracker->addEcommerceItem(
                 $sku,
@@ -123,7 +123,7 @@ class Tracker extends \Magento\Framework\App\Helper\AbstractHelper
 
         // Push `trackEcommerceOrder'
         if (!empty($matomoOrder)) {
-            list($orderId, $grandTotal, $subTotal, $tax, $shipping, $discount)
+            [$orderId, $grandTotal, $subTotal, $tax, $shipping, $discount]
                 = $matomoOrder;
 
             $tracker->trackEcommerceOrder(

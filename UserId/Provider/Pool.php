@@ -68,8 +68,6 @@ class Pool
      */
     public function getAllProviders()
     {
-        return array_filter($this->_providers, function ($provider) {
-            return $provider instanceof ProviderInterface;
-        });
+        return array_filter($this->_providers, fn($provider) => $provider instanceof ProviderInterface);
     }
 }

@@ -64,6 +64,7 @@ class ProductViewObserver implements ObserverInterface
      * @param \Magento\Framework\Event\Observer $observer
      * @return \Chessio\Matomo\Observer\ProductViewObserver
      */
+    #[\Override]
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         if (!$this->_dataHelper->isTrackingEnabled()) {

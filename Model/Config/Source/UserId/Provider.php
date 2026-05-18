@@ -50,6 +50,7 @@ class Provider implements \Magento\Framework\Option\ArrayInterface
      *
      * @return array
      */
+    #[\Override]
     public function toOptionArray()
     {
         $options = [['value' => '', 'label' => __('No')]];

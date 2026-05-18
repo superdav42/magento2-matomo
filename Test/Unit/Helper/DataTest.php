@@ -57,6 +57,7 @@ class DataTest extends \PHPUnit\Framework\TestCase
      *
      * @return void
      */
+    #[\Override]
     public function setUp(): void
     {
         $className = \Chessio\Matomo\Helper\Data::class;

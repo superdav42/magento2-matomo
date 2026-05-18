@@ -84,6 +84,7 @@ class ProductViewObserverTest extends \PHPUnit\Framework\TestCase
      *
      * @return void
      */
+    #[\Override]
     public function setUp(): void
     {
         $className = \Chessio\Matomo\Observer\ProductViewObserver::class;
@@ -192,7 +193,7 @@ class ProductViewObserverTest extends \PHPUnit\Framework\TestCase
                 $sku,
                 $name,
                 // Category should be FALSE if product has no category
-                ($category === null) ? false : $category,
+                $category ?? false,
                 (float) $price
             )
             ->willReturn($this->_trackerMock);

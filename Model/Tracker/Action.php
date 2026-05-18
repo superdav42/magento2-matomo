@@ -29,13 +29,6 @@ class Action
 {
 
     /**
-     * Action name
-     *
-     * @var string $_name
-     */
-    protected $_name;
-
-    /**
      * Action arguments
      *
      * @var array $_args
@@ -45,12 +38,14 @@ class Action
     /**
      * Constructor
      *
-     * @param string $name
+     * @param string $_name
      * @param array $args
      */
-    public function __construct($name, array $args = [])
+    public function __construct(/**
+     * Action name
+     */
+    protected $_name, array $args = [])
     {
-        $this->_name = $name;
         $this->_args = $args;
     }
 

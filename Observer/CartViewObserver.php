@@ -85,6 +85,7 @@ class CartViewObserver implements ObserverInterface
      * @return \Chessio\Matomo\Observer\CartViewObserver
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
+    #[\Override]
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         if ($this->_dataHelper->isTrackingEnabled()) {

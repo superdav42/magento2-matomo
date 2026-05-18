@@ -64,6 +64,7 @@ class CategoryViewObserver implements ObserverInterface
      * @param \Magento\Framework\Event\Observer $observer
      * @return \Chessio\Matomo\Observer\CategoryViewObserver
      */
+    #[\Override]
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         if (!$this->_dataHelper->isTrackingEnabled()) {
