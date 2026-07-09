@@ -326,7 +326,7 @@ class Tracker
     public function __call($name, $arguments)
     {
         return $this->push($this->_actionFactory->create([
-            'name' => $name,
+            '_name' => $name,
             'args' => $arguments
         ]));
     }
